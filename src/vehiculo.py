@@ -11,12 +11,17 @@ class Vehiculo:
         tipo_combustible (str): Tipo de combustible utilizado.
     """
 
+    COMBUSTIBLES_VALIDOS = {"Gasolina", "Diesel", "Eléctrico"}
+
     def __init__(self, marca, modelo, año, kilometraje, estado_actual, tipo_combustible):
         self.marca = marca
         self.modelo = modelo
         self.año = año
         self.kilometraje = kilometraje
         self.estado_actual = estado_actual
+        # Validamos el tipo de combustible al inicializar
+        if tipo_combustible not in self.COMBUSTIBLES_VALIDOS:
+            raise ValueError(f"Tipo de combustible inválido: {tipo_combustible}. Debe ser uno de {self.COMBUSTIBLES_VALIDOS}")
         self.tipo_combustible = tipo_combustible
 
     def get_marca(self):
@@ -53,4 +58,33 @@ class Vehiculo:
         self.estado_actual = nuevo_estado
 
     def set_tipo_combustible(self, nuevo_combustible):
+        # Validamos el tipo de combustible al modificarlo
+        if nuevo_combustible not in self.COMBUSTIBLES_VALIDOS:
+            raise ValueError(f"Tipo de combustible inválido: {nuevo_combustible}. Debe ser uno de {self.COMBUSTIBLES_VALIDOS}")
         self.tipo_combustible = nuevo_combustible
+
+
+
+"""
+
+mi_auto = Vehiculo("Toyota", "Corolla", 2020, 15000, "En movimiento", "Gasolina")
+
+
+print("Marca:", mi_auto.get_marca())                 # Toyota
+print("Modelo:", mi_auto.get_modelo())               # Corolla
+print("Año:", mi_auto.get_año())                     # 2020
+print("Kilometraje:", mi_auto.get_kilometraje())     # 15000
+print("Estado:", mi_auto.get_estado_actual())        # En movimiento
+print("Tipo de Combustible:", mi_auto.get_tipo_combustible())  # Gasolina
+
+# Cambiar el tipo de combustible
+mi_auto.set_tipo_combustible("Diesel")
+print("Nuevo Tipo de Combustible:", mi_auto.get_tipo_combustible())  # Diesel
+
+# Intentar cambiar el tipo de combustible a uno inválido
+try:
+    mi_auto.set_tipo_combustible("Híbrido")  # Este lanzará un ValueError
+except ValueError as e:
+    print(e)  # Imprime el error: Tipo de combustible inválido: Híbrido. Debe ser uno de {'Gasolina', 'Diesel', 'Eléctrico'}
+    
+"""
